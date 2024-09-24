@@ -12,7 +12,13 @@ let searchQuery = '';
 
 // Fetch News from API using NewsAPI module
 async function fetchNews(page = 1) {
-    let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}&country=${selectedCountry}&category=${selectedCategory}&q=${searchQuery}&page=${page}&pageSize=20&apiKey=${apiKey}`;
+    let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}
+    &country=${selectedCountry}
+    &category=${selectedCategory}
+    &q=${searchQuery}
+    &page=${page}
+    &pageSize=20
+    &apiKey=${apiKey}`;
     
     const response = await fetch(url);
     const data = await response.json();
