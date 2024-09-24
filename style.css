@@ -32,24 +32,61 @@ body.dark-mode {
 
 .card {
     margin-bottom: 20px;
-    height: 400px;
-    overflow: hidden;
+    height: 400px; /* Fixed height for uniformity */
+    overflow: hidden; /* Hide overflowing content */
     position: relative;
+}
+
+/* Content inside the card */
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Title styling */
 .card-title {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif; /* Change font to Times New Roman */
     font-size: 1.25rem;
     margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    white-space: nowrap; /* Prevent line breaks */
 }
 
 /* Search Bar */
 #searchInput {
-    width: 200px;
+    width: 200px; /* Adjust width as needed */
+}
+
+/* Description styling */
+.card-text {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    margin: 0; /* Remove margin to prevent overflow */
+}
+
+/* Anchor styling to make the card clickable */
+.card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+}
+
+/* Light/Dark Mode Toggle */
+.switch .slider {
+    background-color: red; /* Vibrant red color for light mode visibility */
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 /* Footer */
@@ -59,6 +96,19 @@ body.dark-mode {
     padding: 10px 0;
 }
 
+.footer a {
+    margin: 0 5px;
+    color: #000;
+}
+
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* Country Dropdown Styling */
+.form-select {
+    font-size: 1rem;
+    padding: 6px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
 }
