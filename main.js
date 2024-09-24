@@ -134,3 +134,63 @@ async function fetchNewsBySearch(query) {
     displayNews(data.articles);
     document.getElementById('resultsInfo').innerHTML = `Search Results for "${query}" (${data.totalResults} results)`;
 }
+// Insert language selection dropdown into the header
+const header = document.getElementById('header'); // Assuming you have a header element with this ID
+header.innerHTML += `
+    <div style="text-align: right; margin-bottom: 10px;">
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="zh">Chinese</option>
+            <!-- Add more languages as needed -->
+        </select>
+    </div>
+`;
+
+// Initialize default language
+let selectedLanguage = 'en';
+
+// Listen for language selection
+document.getElementById('languageSelect').addEventListener('change', function () {
+    selectedLanguage = this.value; // Update selected language
+    fetchBreakingNews(); // Fetch breaking news in the new language
+    fetchNews(currentPage); // Fetch news in the new language
+});
+
+// Fetch Breaking News with selected language
+async function fetchBreakingNews() {
+    let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}&country=${selectedCountry}&pageSize=1&apiKey=${apiKey}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.articles.length > 0) {
+        breakingNewsId = data.articles[0].url; // Store the breaking news URL
+        displayBreakingNews(data.articles[0]);
+    }
+}
+
+// Fetch News from API with selected language
+async function fetchNews(page = 1) {
+    let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}
+    &country=${selectedCountry}
+    &category=${selectedCategory}
+    &q=${searchQuery}
+    &page=${page}
+    &pageSize=20
+    &apiKey=${apiKey}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const filteredArticles = data.articles.filter(article => article.url !== breakingNewsId);
+    
+    displayNews(filteredArticles);
+    document.getElementById('resultsInfo').innerHTML = `Welcome to DailyPulse (${data.totalResults} results)`;
+}
+
+// Call the initial fetch for breaking news and articles
+fetchBreakingNews();
+fetchNews();
