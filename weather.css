@@ -1,0 +1,49 @@
+
+/* Weather Card Styling */
+.weather-card {
+    background-color: #e0f7fa; /* Light blue for weather-related data */
+    border: 1px solid #4fc3f7;
+    text-align: center;
+}
+
+.weather-card .card-body {
+    background-color: #b3e5fc;
+    padding: 20px;
+}
+
+.weather-card .card-title {
+    color: #0277bd;
+}
+
+.weather-card img {
+    height: 100px;
+    width: 100px;
+    margin: 10px 0;
+}
+
+.weather-search {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.weather-search input {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.weather-search button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0288d1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.weather-search button:hover {
+    background-color: #0277bd;
+}
