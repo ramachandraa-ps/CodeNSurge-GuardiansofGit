@@ -21,32 +21,55 @@ async function fetchNews(page = 1) {
     document.getElementById('resultsInfo').innerHTML = `Welcome to DailyPulse (${data.totalResults} results)`;
 }
 
+let breakingNewsId = null; // Variable to store the ID of the breaking news article
+
+// Fetch Breaking News from API
 async function fetchBreakingNews() {
     let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}&country=${selectedCountry}&pageSize=1&apiKey=${apiKey}`;
     
     const response = await fetch(url);
     const data = await response.json();
 
-    displayBreakingNews(data.articles[0]);
+    if (data.articles.length > 0) {
+        breakingNewsId = data.articles[0].url; // Store the breaking news URL
+        displayBreakingNews(data.articles[0]);
+    }
 }
 
+// Display Breaking News
 function displayBreakingNews(article) {
     const breakingNewsContainer = document.getElementById('breakingNews');
     
-    if (article) {
-        breakingNewsContainer.innerHTML = `
-            <div class="breaking-news-card">
-                <a href="${article.url}" target="_blank" class="breaking-news-link">
-                    <img src="${article.urlToImage}" alt="Breaking News Image" class="breaking-news-img">
-                    <h5 class="breaking-news-title">${article.title}</h5>
-                </a>
-            </div>
-        `;
-    } else {
-        breakingNewsContainer.innerHTML = '<p>No breaking news available.</p>';
-    }
+    breakingNewsContainer.innerHTML = `
+        <div class="breaking-news-card">
+            <a href="${article.url}" target="_blank" class="breaking-news-link">
+                <img src="${article.urlToImage}" alt="Breaking News Image" class="breaking-news-img">
+                <h5 class="breaking-news-title">${article.title}</h5>
+            </a>
+        </div>
+    `;
 }
-fetchBreakingNews();
+
+// Fetch News from API using NewsAPI module
+async function fetchNews(page = 1) {
+    let url = `https://newsapi.org/v2/top-headlines?language=${selectedLanguage}
+    &country=${selectedCountry}
+    &category=${selectedCategory}
+    &q=${searchQuery}
+    &page=${page}
+    &pageSize=20
+    &apiKey=${apiKey}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // Filter out the breaking news article
+    const filteredArticles = data.articles.filter(article => article.url !== breakingNewsId);
+    
+    displayNews(filteredArticles);
+    document.getElementById('resultsInfo').innerHTML = `Welcome to DailyPulse (${data.totalResults} results)`;
+}
+
 // Display News Cards (4 per row)
 function displayNews(articles) {
     const newsContainer = document.getElementById('newsCards');
