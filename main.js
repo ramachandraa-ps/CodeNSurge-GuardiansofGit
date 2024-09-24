@@ -1,4 +1,3 @@
-const darkModeToggle = document.getElementById("darkModeToggle");
 const body = document.body;
 // Main JavaScript logic for the News App
 
